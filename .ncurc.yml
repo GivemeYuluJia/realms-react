@@ -8,4 +8,6 @@ reject: [
     'execa',
     # Too early cause in esm
     'is-port-reachable',
+    #wait for connectkit to support https://github.com/family/connectkit/issues/42
+    'wagmi',
   ]

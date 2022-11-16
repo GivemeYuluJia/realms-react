@@ -169,6 +169,7 @@ export const RaidResults = (props: RaidResultsProps) => {
             layout="responsive"
             height={250}
             src="/createOrDestroy-desktop.webp"
+            alt="Battle Image"
           />
           <div className="mt-4 text-3xl">
             Running on-chain battle simulation...

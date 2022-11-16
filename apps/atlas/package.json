@@ -209,7 +209,7 @@
     "three.meshline": "1.4.0",
     "threejs-meshline": "2.0.12",
     "use-sound": "^4.0.1",
-    "wagmi": "0.8.4"
+    "wagmi": "0.7.15"
   },
   "resolutions": {
     "bn.js": "^5.2.1"

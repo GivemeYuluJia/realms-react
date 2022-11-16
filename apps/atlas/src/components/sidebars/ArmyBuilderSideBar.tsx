@@ -231,6 +231,7 @@ export const ArmyBuilderSideBar: React.FC<Prop> = (props) => {
                 width={400}
                 height={400}
                 objectFit={'cover'}
+                alt={activeBattalionData?.name}
               />
 
               <div className="p-3">
