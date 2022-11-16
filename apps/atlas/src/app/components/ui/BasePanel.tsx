@@ -19,7 +19,7 @@ export const BasePanel = (props: Props) => {
 
   return (
     <animated.div
-      className={`absolute top-0 w-full h-full z-10 ${props.className}`}
+      className={`absolute top-0 left-0 w-full h-full z-10 ${props.className}`}
       style={animation}
     >
       <div

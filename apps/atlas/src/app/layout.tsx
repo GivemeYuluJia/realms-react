@@ -3,6 +3,7 @@ import type { ReactElement } from 'react';
 
 import React from 'react';
 import { Head } from '@/components/Head';
+import { AtlasLink } from '@/components/navigation/AtlasLink';
 import { BottomLeftNav } from '@/components/navigation/BottomLeftNav';
 import { MenuSideBar } from '@/components/navigation/MenuSideBar';
 import { TopLeftNav } from '@/components/navigation/TopLeftNav';
@@ -26,7 +27,8 @@ export default function Layout({ children }: { children: React.ReactNode }) {
             <TopLeftNav />
             <TopRightNav />
             <BottomLeftNav />
-            <MenuSideBar />
+            <AtlasLink />
+            {/* <MenuSideBar /> */}
             <div className="relative flex flex-col w-full">
               {/* <Header /> */}
               <div className="relative w-full h-full pt-32 pl-10 bg-black">

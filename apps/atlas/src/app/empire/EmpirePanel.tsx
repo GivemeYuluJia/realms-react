@@ -127,7 +127,6 @@ export function EmpirePanel() {
 
   return (
     <BasePanel className="w-5/12" open={true}>
-      <div className="z-50 bg-white">Test</div>
       <Tabs
         selectedIndex={selectedTab}
         onChange={(index) => pressedTab(index as number)}
