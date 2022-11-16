@@ -1,3 +1,5 @@
+'use client';
+
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Button } from '@bibliotheca-dao/ui-lib';
 import Ouroboros from '@bibliotheca-dao/ui-lib/icons/ouroboros.svg';
@@ -6,10 +8,9 @@ import { ScenegraphLayer } from '@deck.gl/mesh-layers';
 import DeckGL from '@deck.gl/react';
 import { Popover, Transition } from '@headlessui/react';
 import dynamic from 'next/dynamic';
-import { useRouter } from 'next/router';
+import { useRouter } from 'next/navigation';
 import React, { useCallback, useMemo } from 'react';
 import Map from 'react-map-gl';
-import Layout from '@/components/Layout';
 const ChatComponent = dynamic(
   () => import('@/components/minigame/realtime/Chat'),
   { ssr: false }
@@ -28,14 +29,12 @@ import useUsersRealms from '@/hooks/settling/useUsersRealms';
 import type { AssetType } from '@/hooks/useAtlasMap';
 import { Annotation } from '@/shared/Icons';
 
-export default function AtlasPage() {
+export default function Atlas() {
   return (
-    <Layout>
-      <RealmProvider>
-        <MapModule />
-        <AtlasSidebars />
-      </RealmProvider>
-    </Layout>
+    <RealmProvider>
+      <MapModule />
+      <AtlasSidebars />
+    </RealmProvider>
   );
 }
 
@@ -46,7 +45,7 @@ function AtlasSidebars() {
   const selectedAsset = mapContext.selectedAsset;
 
   function onClose() {
-    router.push('/', undefined, { shallow: true });
+    router.push('/');
   }
   return (
     <>
@@ -178,7 +177,7 @@ function MapModule() {
         layers={layers}
       >
         {!mapContext.isMapLoaded ? (
-          <div className="fixed z-50 flex flex-wrap justify-center w-screen h-screen bg-gray-1100">
+          <div className="flex flex-wrap justify-center w-screen h-screen bg-gray-1100">
             {' '}
             <h1 className="self-center duration-100 animate-pulse">
               <Ouroboros className="block w-20 mx-auto fill-current" />

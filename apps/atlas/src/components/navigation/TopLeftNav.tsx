@@ -1,3 +1,5 @@
+'use client';
+
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 import { Button, IconButton } from '@bibliotheca-dao/ui-lib';
@@ -11,7 +13,7 @@ import VolumeOn from '@bibliotheca-dao/ui-lib/icons/volume-up-solid.svg';
 import { formatEther } from '@ethersproject/units';
 import { useAccount } from '@starknet-react/core';
 import Link from 'next/link';
-import { useRouter } from 'next/router';
+import { usePathname } from 'next/navigation';
 import { useState } from 'react';
 import { useAccount as useL1Account } from 'wagmi';
 import { useResourcesContext } from '@/context/ResourcesContext';
@@ -26,7 +28,7 @@ type HeaderSidePanelType = 'bank' | 'transaction' | '';
 export const TopLeftNav = () => {
   const { lordsBalance } = useResourcesContext();
   const [soundOn, setSoundOn] = useState(false);
-  const { pathname } = useRouter();
+  const pathname = usePathname();
   const { address } = useAccount();
   const { address: l1Address } = useL1Account();
 
@@ -52,7 +54,7 @@ export const TopLeftNav = () => {
 
   function onLordsNavClick() {
     // Bank swap panel is already open
-    if (pathname.slice(1).split('/')[0] === 'bank') {
+    if (pathname?.slice(1).split('/')[0] === 'bank') {
       return;
     }
     setSelectedSideBar(selectedSideBar === 'bank' ? '' : 'bank');
@@ -78,7 +80,7 @@ export const TopLeftNav = () => {
 
         <div className="bg-white absolute rounded-r-full rounded-b-full md:w-32 md:h-32 lg:w-48 lg:h-48 shadow-2xl border-yellow-800  z-40 border md:-ml-16 md:-mt-16 lg:-ml-24 lg:-mt-24 top-0 bg-black paper shadow-yellow-200 hover:bg-gray-1000 "></div>
         <div className="z-40 md:top-4 md:left-3 lg:top-5 lg:left-4 absolute">
-          <Button href="/account" variant="unstyled">
+          <Button href="/empire" variant="unstyled">
             <Crown className="md:w-6 md:w-6 lg:w-9 lg:h-9 fill-current " />
           </Button>
           {/* {address && <TransactionNavItem onClick={onTransactionNavClick} />} */}

@@ -1,3 +1,5 @@
+'use client';
+
 import { createContext, useContext } from 'react';
 import type { Travel } from '@/hooks/settling/useTravel';
 import useTravel from '@/hooks/settling/useTravel';

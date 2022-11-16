@@ -13,8 +13,8 @@ import { defaultProvider } from 'starknet';
 import type { Abi } from 'starknet';
 import { bnToUint256, uint256ToBN } from 'starknet/dist/utils/uint256';
 import loreContractABI from '@/abi/lore/Lore.json';
-import type { UploadArweaveResponse } from '@/pages/api/lore/upload_arweave';
 // import erc20Abi from 'abi/l2/erc20.json';
+import type { UploadArweaveResponse } from '@/pages/api/lore/upload_arweave';
 import { initialValue, LoreEditor } from './editor';
 import {
   extractPOIs,

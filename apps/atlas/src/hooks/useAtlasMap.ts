@@ -1,5 +1,5 @@
 import { FlyToInterpolator } from '@deck.gl/core';
-import { useRouter } from 'next/router';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import crypts from '@/geodata/crypts.json';
 import ga_bags from '@/geodata/ga.json';
@@ -7,23 +7,19 @@ import loot_bags from '@/geodata/loot.json';
 import realms from '@/geodata/realms.json';
 import { soundSelector, useUiSounds } from './useUiSounds';
 export type AssetType = 'realm' | 'crypt' | 'loot' | 'ga';
-
 export type AssetFilter = {
   value: AssetType;
   name: string;
   maxId: number;
 };
-
 type Coordinate = {
   longitude: number;
   latitude: number;
 };
-
 type Asset = {
   id: string;
   type: AssetType;
 };
-
 function getCoordinates(assetId: string, assetType: AssetType) {
   let asset;
   switch (assetType) {
@@ -42,17 +38,14 @@ function getCoordinates(assetId: string, assetType: AssetType) {
       );
       break;
   }
-
   if (!asset || !asset[0]) {
     return null;
   }
-
   return {
     longitude: asset[0].xy[0] as number,
     latitude: asset[0].xy[1] as number,
   };
 }
-
 export interface AtlasMap {
   navigateToAsset: (assetId: number, assetType: AssetType) => void;
   setViewState: (viewState: any) => void;
@@ -61,15 +54,14 @@ export interface AtlasMap {
   isMapLoaded: boolean;
   setIsMapLoaded: (loaded: boolean) => void;
 }
-
 export function useAtlasMap(): AtlasMap {
   const { play: fly } = useUiSounds(soundSelector.fly);
   const router = useRouter();
-  const { asset } = router.query;
+  const searchParams = useSearchParams();
+  const asset = searchParams.get('asset');
   const [selectedAsset, setSelectedAsset] = useState<Asset>(null!);
   const [coordinates, setCoordinates] = useState<Coordinate>(null!);
   const [isMapLoaded, setIsMapLoaded] = useState(false);
-
   const [viewState, setViewState] = useState({
     longitude: 0,
     latitude: 0,
@@ -83,11 +75,8 @@ export function useAtlasMap(): AtlasMap {
     transitionDuration: 0,
     transitionInterpolator: new FlyToInterpolator(),
   });
-
   // check for asset in query string
   useEffect(() => {
-    if (!router.isReady) return;
-
     // match asset
     const match = ((asset as string) ?? '').match(/(realm|crypt|loot|ga)(\d+)/);
     if (match) {
@@ -95,7 +84,6 @@ export function useAtlasMap(): AtlasMap {
         id: match[2],
         type: match[1] as AssetType,
       });
-
       setCoordinates(
         getCoordinates(match[2], match[1] as AssetType) as Coordinate
       );
@@ -103,7 +91,7 @@ export function useAtlasMap(): AtlasMap {
       setSelectedAsset(null!);
       setCoordinates(null!);
     }
-  }, [router.isReady, asset]);
+  }, [asset]);
 
   // Update view state on coordinates change
   useEffect(() => {
@@ -130,7 +118,7 @@ export function useAtlasMap(): AtlasMap {
       return;
     }
     fly();
-    router.push(`/?asset=${assetType}${assetId}`, undefined, { shallow: true });
+    router.push(`/?asset=${assetType}${assetId}`);
   }
 
   return {

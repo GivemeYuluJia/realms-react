@@ -1,9 +1,10 @@
+'use client';
 /* eslint-disable @typescript-eslint/naming-convention */
 /* eslint-disable sonarjs/cognitive-complexity */
 
 import { useAccount } from '@starknet-react/core';
 import { BigNumber } from 'ethers';
-import { useRouter } from 'next/router';
+import { useRouter, useSelectedLayoutSegment } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 import type { Playlist } from '@/components/sidebars/RealmsPlaylistSideBar';
@@ -72,12 +73,17 @@ type Args = {
 
 const useRealmPlaylist = (args: Args) => {
   const router = useRouter();
+  const segment = useSelectedLayoutSegment();
+  console.log(segment);
   const { address } = useAccount();
   const starknetWallet = address ? BigNumber.from(address).toHexString() : '';
-  const realmIdFromRoute = router.query?.realmId
+  // TODO sort query once decided
+  const realmIdFromRoute = /* router.query?.realmId
     ? Number(router.query?.realmId)
-    : undefined;
-  const query = { ...router.query };
+    : undefined; */ segment;
+  const query = {
+    /* ...router.query */
+  };
 
   const [cursor, setCursor] = useState(
     storage<number>(realmPlaylistCursorKey, 0).get()
@@ -120,17 +126,7 @@ const useRealmPlaylist = (args: Args) => {
         );
         storage(realmPlaylistNameKey, '').set(rp.name);
         storage<number[]>(realmPlaylistKey, []).set(realmIds);
-        !noRedirect &&
-          router.replace(
-            {
-              pathname: `/realm/${realmIds[0]}`,
-              query: { ...query },
-            },
-            undefined,
-            {
-              shallow: true,
-            }
-          );
+        !noRedirect && router.replace(`/realm/${realmIds[0]}${{ ...query }}`);
       }
       if (!res.loading && res.data.realms.length == 0) {
         toast(`Playlist ${rp.name} has no Realms`);
@@ -146,16 +142,12 @@ const useRealmPlaylist = (args: Args) => {
   const next = () => {
     const currentPlaylist = storage<string>(realmPlaylistNameKey, '').get();
     const noPlaylistSpecified = currentPlaylist == '';
-
-    if (noPlaylistSpecified && realmIdFromRoute !== undefined) {
-      router.replace(
-        {
-          pathname: `/realm/[realmId]`,
-          query: { ...query, realmId: realmIdFromRoute + 1 },
-        },
-        undefined,
-        { shallow: true }
-      );
+    // TODO rework nex prev realm
+    /* if (noPlaylistSpecified && realmIdFromRoute !== undefined) {
+      router.replace({
+        pathname: `/realm/[realmId]`,
+        query: { ...query, realmId: realmIdFromRoute + 1 },
+      });
     } else {
       if (cursor < realmIds.length - 1) {
         setCursor(cursor + 1);
@@ -166,23 +158,19 @@ const useRealmPlaylist = (args: Args) => {
           position: 'top-left',
         });
       }
-    }
+    } */
   };
 
   const prev = () => {
     const currentPlaylist = storage<string>(realmPlaylistNameKey, '').get();
     const noPlaylistSpecified = currentPlaylist == '';
 
-    if (noPlaylistSpecified && realmIdFromRoute !== undefined) {
+    /* if (noPlaylistSpecified && realmIdFromRoute !== undefined) {
       // use realm id
-      router.replace(
-        {
-          pathname: `/realm/[realmId]`,
-          query: { ...query, realmId: realmIdFromRoute - 1 },
-        },
-        undefined,
-        { shallow: true }
-      );
+      router.replace({
+        pathname: `/realm/[realmId]`,
+        query: { ...query, realmId: realmIdFromRoute - 1 },
+      });
     } else {
       if (cursor > 0) {
         setCursor(cursor - 1);
@@ -193,7 +181,7 @@ const useRealmPlaylist = (args: Args) => {
           position: 'top-left',
         });
       }
-    }
+    } */
   };
 
   useEffect(() => {

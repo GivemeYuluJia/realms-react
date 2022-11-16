@@ -1,3 +1,5 @@
+'use client';
+
 import { IconButton } from '@bibliotheca-dao/ui-lib';
 import Bag from '@bibliotheca-dao/ui-lib/icons/bag.svg';
 import Castle from '@bibliotheca-dao/ui-lib/icons/castle.svg';
@@ -14,22 +16,24 @@ import Sword from '@bibliotheca-dao/ui-lib/icons/sword.svg';
 import { animated, useSpring } from '@react-spring/web';
 import { ConnectKitButton } from 'connectkit';
 import Link from 'next/link';
-import { useRouter } from 'next/router';
+import { usePathname, useSearchParams } from 'next/navigation';
 import { useCallback, useState, useMemo } from 'react';
 import { useBreakpoint } from '@/hooks/useBreakPoint';
 
 export const MenuSideBar = () => {
   const breakpoints: any = useBreakpoint();
   const [showMenu, setShowMenu] = useState(breakpoints.lg);
-  const { query, pathname } = useRouter();
+  const pathname = usePathname();
+  const query = useSearchParams();
+
+  const segment = query.get('segment') || '';
 
   const isPage = useCallback(
-    (name: string) => name === pathname.slice(1).split('/')[0],
+    (name: string) => name === pathname?.slice(1).split('/')[0],
     [pathname]
   );
   const getPageHref = useCallback(
-    (name: string) =>
-      name === (query.segment && query.segment[0]) ? '/' : `/${name}`,
+    (name: string) => (name === (segment && segment[0]) ? '/' : `/${name}`),
     [query]
   );
   const animation = useSpring({
@@ -60,41 +64,41 @@ export const MenuSideBar = () => {
       //   icon: <Crown className={`${iconClasses('account')}`} />,
       //   text: 'empire',
       // },
-      {
-        page: 'realm',
-        icon: <Castle className={`${iconClasses('realm')}`} />,
-        text: 'Realms',
-      },
-      {
-        page: 'bank',
-        icon: <Lords className={`${iconClasses('bank')}`} />,
-        text: 'Bank',
-      },
-      {
-        page: 'loot',
-        icon: <Bag className={`${iconClasses('loot')}`} />,
-        text: 'Loot',
-      },
-      {
-        page: 'ga',
-        icon: <Sword className={`${iconClasses('ga')}`} />,
-        text: 'GA',
-      },
-      {
-        page: 'crypt',
-        icon: <Danger className={`${iconClasses('crypt')}`} />,
-        text: 'Crypts',
-      },
-      {
-        page: 'lore',
-        icon: <Library className={`${iconClasses('lore')}`} />,
-        text: 'Lore',
-      },
-      {
-        page: 'leaderboard',
-        icon: <Laurel className={`${iconClasses('leaderboard')}`} />,
-        text: 'Leaders',
-      },
+      // {
+      //   page: 'realm',
+      //   icon: <Castle className={`${iconClasses('realm')}`} />,
+      //   text: 'Realms',
+      // },
+      // {
+      //   page: 'bank',
+      //   icon: <Lords className={`${iconClasses('bank')}`} />,
+      //   text: 'Bank',
+      // },
+      // {
+      //   page: 'loot',
+      //   icon: <Bag className={`${iconClasses('loot')}`} />,
+      //   text: 'Loot',
+      // },
+      // {
+      //   page: 'ga',
+      //   icon: <Sword className={`${iconClasses('ga')}`} />,
+      //   text: 'GA',
+      // },
+      // {
+      //   page: 'crypt',
+      //   icon: <Danger className={`${iconClasses('crypt')}`} />,
+      //   text: 'Crypts',
+      // },
+      // {
+      //   page: 'lore',
+      //   icon: <Library className={`${iconClasses('lore')}`} />,
+      //   text: 'Lore',
+      // },
+      // {
+      //   page: 'leaderboard',
+      //   icon: <Laurel className={`${iconClasses('leaderboard')}`} />,
+      //   text: 'Leaders',
+      // },
       // {
       //   page: 'noticeBoard',
       //   icon: <Library className={iconClasses} />,

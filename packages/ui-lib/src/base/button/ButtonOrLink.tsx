@@ -1,6 +1,6 @@
 import clsx from 'clsx';
 import Link from 'next/link';
-import { useRouter } from 'next/router';
+import { useRouter } from 'next/navigation';
 import type {
   ComponentPropsWithRef,
   ReactElement,
@@ -148,15 +148,8 @@ export const ButtonOrLink = forwardRef<
     );
 
     if (isLink) {
-      const finalHref =
-        preserveRedirect && router.query.redirect
-          ? `${href!}?redirect=${encodeURIComponent(
-              router.query.redirect as string
-            )}`
-          : href!;
-
       return (
-        <Link href={finalHref} passHref replace>
+        <Link href={href} passHref replace>
           {content}
         </Link>
       );

@@ -1,3 +1,4 @@
+'use client';
 import React, { useState } from 'react';
 import Layout from '@/components/Layout';
 import { ArtBackground } from '@/components/map/ArtBackground';
@@ -16,14 +17,14 @@ export default function RealmPage() {
       };
 
   return (
-    <Layout>
-      <BankPanel
+    <>
+      <div>test</div>
+      {/* <BankPanel
         onOpenSwap={() => {
           setShowSwap(true);
         }}
       />
-      <ResourceSwapSideBar isOpen={isSwapOpen} onClose={onCloseClick} />
-      <ArtBackground background="bank" />
-    </Layout>
+      <ResourceSwapSideBar isOpen={isSwapOpen} onClose={onCloseClick} /> */}
+    </>
   );
 }
