@@ -22,7 +22,7 @@ export const adminMainKeys = {
   walletAddress: '0xec6d78fd4dba4e4c723349b3f21b53d3a9273975',
   password: 'web3mq',
 };
-export const groupid = 'group:9e3b48cbfd8e8ef1b324f248024d2a463cba2179';
+export const groupid = 'group:4b292d901c2f60e47aa887c3d5a34c897b31c10a';
 
 export const LordsChatProvider = (props: {
   fastestUrl: string;
@@ -69,9 +69,8 @@ export const LordsChatProvider = (props: {
     );
   };
   const joinLordsChat = useCallback(async () => {
-    // 添加管理员
     await client.contact.sendFriend(adminMainKeys.userid, '');
-    // 切换管理员
+
     const expired =
       Number(localStorage.getItem('ADMIN_PUBKEY_EXPIRED_TIMESTAMP')) || '';
     let adminPrivateKey = localStorage.getItem('ADMIN_PRIVATE_KEY') || '';
@@ -110,14 +109,14 @@ export const LordsChatProvider = (props: {
     const { nickname } = (userInfo as any).web3mqInfo || {};
     const userName = nickname || defaultName || getShortAddress(keys.userid);
     await client.message.sendMessage(
-      `Welcome ${userName} to join the Lords chat`,
+      `Welcome ${userName} to the realms chat`,
       groupid
     );
     await init();
-    // 切换用户1
+
     client.keys.userid = keys.userid;
     client.keys.PrivateKey = keys.PrivateKey;
-    // 刷新群列表
+
     const { userid, PrivateKey } = keys;
     const timestamp = Date.now();
     const topicType = 'group';
